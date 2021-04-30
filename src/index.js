@@ -26,13 +26,23 @@ const FlatList = ({
 	...rest
 }, ref) => {
 	const [ limit, setLimit ] = useState(initialNumToRender);
-	const container = useRef({});
 	const slicedData = data.slice(0, limit);
 	let Container = rest.Component ? forwardRef(rest.Component) : (props => <div { ...props }/>);
 
+	const getContainer = () => {
+		try {
+			return document.getElementById(footerID).parentNode;
+		} catch (e) {
+			console.log(e);
+			return {};
+		}
+	}
+
+	const getParentNode = () => getContainer().parentNode;
+
 	const scrollTo = index => {
 		try {
-      		container.current.childNodes[index].scrollIntoView({ behavior: "smooth", block: "start" });
+      		getContainer().childNodes[index].scrollIntoView({ behavior: "smooth", block: "start" });
       	} catch (e) {
       		console.log(e);
       	}
@@ -55,14 +65,6 @@ const FlatList = ({
 		},
   	}) );
 
-	const getParentNode = () => {
-		try {
-			return document.getElementById(footerID).parentNode.parentNode;
-		} catch (e) {
-			return undefined;
-		}
-	}
-
 	const onScroll = () => {
 		const { scrollTop, scrollHeight, offsetHeight } = getParentNode();
 		const contentHeight = scrollHeight - offsetHeight;
@@ -74,6 +76,10 @@ const FlatList = ({
 	}
 
 	useEffect(() => {
+		onScroll();
+	}, []);
+
+	useEffect(() => {
 		const parent = getParentNode();
 
 		if (parent) {
@@ -81,13 +87,13 @@ const FlatList = ({
 
 			return () => parent.removeEventListener("scroll", onScroll);
 		}
-	}, [ onScroll, container ]);
+	}, [ onScroll, getContainer ]);
 
 	if (Array.isArray(data) === false)
 		return null;
 
 	return (
-		<Container ref={ container } { ...rest }>
+		<Container { ...rest }>
 			{renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle)}
 
 			{ slicedData.map((item, index) => renderItem({ item, index })) }

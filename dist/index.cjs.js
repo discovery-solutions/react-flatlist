@@ -1,6 +1,5 @@
 'use strict';
 
-var _extends = require('@babel/runtime/helpers/extends');
 var _slicedToArray = require('@babel/runtime/helpers/slicedToArray');
 var _objectWithoutProperties = require('@babel/runtime/helpers/objectWithoutProperties');
 var _typeof = require('@babel/runtime/helpers/typeof');
@@ -8,7 +7,6 @@ var React = require('react');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var _extends__default = /*#__PURE__*/_interopDefaultLegacy(_extends);
 var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray);
 var _objectWithoutProperties__default = /*#__PURE__*/_interopDefaultLegacy(_objectWithoutProperties);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
@@ -53,15 +51,27 @@ var FlatList = function FlatList(_ref, ref) {
       limit = _useState2[0],
       setLimit = _useState2[1];
 
-  var container = React.useRef({});
   var slicedData = data.slice(0, limit);
   var Container = rest.Component ? /*#__PURE__*/React.forwardRef(rest.Component) : function (props) {
     return /*#__PURE__*/React__default['default'].createElement("div", props);
   };
 
+  var getContainer = function getContainer() {
+    try {
+      return document.getElementById(footerID).parentNode;
+    } catch (e) {
+      console.log(e);
+      return {};
+    }
+  };
+
+  var getParentNode = function getParentNode() {
+    return getContainer().parentNode;
+  };
+
   var scrollTo = function scrollTo(index) {
     try {
-      container.current.childNodes[index].scrollIntoView({
+      getContainer().childNodes[index].scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
@@ -84,14 +94,6 @@ var FlatList = function FlatList(_ref, ref) {
     };
   });
 
-  var getParentNode = function getParentNode() {
-    try {
-      return document.getElementById(footerID).parentNode.parentNode;
-    } catch (e) {
-      return undefined;
-    }
-  };
-
   var onScroll = function onScroll() {
     var _getParentNode = getParentNode(),
         scrollTop = _getParentNode.scrollTop,
@@ -107,6 +109,9 @@ var FlatList = function FlatList(_ref, ref) {
   };
 
   React.useEffect(function () {
+    onScroll();
+  }, []);
+  React.useEffect(function () {
     var parent = getParentNode();
 
     if (parent) {
@@ -115,11 +120,9 @@ var FlatList = function FlatList(_ref, ref) {
         return parent.removeEventListener("scroll", onScroll);
       };
     }
-  }, [onScroll, container]);
+  }, [onScroll, getContainer]);
   if (Array.isArray(data) === false) return null;
-  return /*#__PURE__*/React__default['default'].createElement(Container, _extends__default['default']({
-    ref: container
-  }, rest), renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle), slicedData.map(function (item, index) {
+  return /*#__PURE__*/React__default['default'].createElement(Container, rest, renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle), slicedData.map(function (item, index) {
     return renderItem({
       item: item,
       index: index
