@@ -43,3 +43,4 @@ export default App;
 | ListHeaderComponentStyle  | ```style object```  | ```null``` |
 | ListFooterComponent  | ```component / node / function```  | ```null``` |
 | ListFooterComponentStyle  | ```style object```  | ```null``` |
+| Component  | ```component / function```  | ```div``` |
