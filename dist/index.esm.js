@@ -1,10 +1,14 @@
+import _extends from '@babel/runtime/helpers/extends';
 import _slicedToArray from '@babel/runtime/helpers/slicedToArray';
 import _objectWithoutProperties from '@babel/runtime/helpers/objectWithoutProperties';
 import _typeof from '@babel/runtime/helpers/typeof';
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React, { forwardRef, useState, useRef, useEffect } from 'react';
 
-var renderComponent = function renderComponent(Component, style) {
+var footerID = "flatlist-footer-".concat(Date.now());
+
+var renderComponent = function renderComponent(Component) {
+  var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var returnComponent = arguments.length > 2 ? arguments[2] : undefined;
   if (["object", "function"].includes(_typeof(Component)) === false) return null;
 
   if (_typeof(Component) === "object") {
@@ -14,6 +18,7 @@ var renderComponent = function renderComponent(Component, style) {
     return Clone;
   }
 
+  if (returnComponent) return Component;
   return /*#__PURE__*/React.createElement(Component, {
     style: style
   });
@@ -40,7 +45,7 @@ var FlatList = function FlatList(_ref, ref) {
 
   var container = useRef({});
   var slicedData = data.slice(0, limit);
-  var Component = typeof rest.Component === "function" ? Component : function (props) {
+  var Container = rest.Component ? /*#__PURE__*/forwardRef(rest.Component) : function (props) {
     return /*#__PURE__*/React.createElement("div", props);
   };
 
@@ -55,7 +60,7 @@ var FlatList = function FlatList(_ref, ref) {
     }
   };
 
-  var scrollToIndex = useCallback(function (index) {
+  var scrollToIndex = React.useCallback(function (index) {
     if (index > limit) setLimit(index + initialNumToRender);
     return scrollTo(index);
   }, [scrollTo, limit, setLimit]);
@@ -71,7 +76,7 @@ var FlatList = function FlatList(_ref, ref) {
 
   var getParentNode = function getParentNode() {
     try {
-      return ReactDOM.findDOMNode(container.current).parentNode;
+      return document.getElementById(footerID).parentNode.parentNode;
     } catch (e) {
       return undefined;
     }
@@ -93,22 +98,27 @@ var FlatList = function FlatList(_ref, ref) {
 
   useEffect(function () {
     var parent = getParentNode();
-    parent.addEventListener("scroll", onScroll);
-    return function () {
-      return parent.removeEventListener("scroll", onScroll);
-    };
-  }, [onScroll]);
+
+    if (parent) {
+      parent.addEventListener("scroll", onScroll);
+      return function () {
+        return parent.removeEventListener("scroll", onScroll);
+      };
+    }
+  }, [onScroll, container]);
   if (Array.isArray(data) === false) return null;
-  return /*#__PURE__*/React.createElement(Component, {
+  return /*#__PURE__*/React.createElement(Container, _extends({
     ref: container
-  }, renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle), slicedData.map(function (item, index) {
+  }, rest), renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle), slicedData.map(function (item, index) {
     return renderItem({
       item: item,
       index: index
     });
-  }), renderComponent(rest.ListFooterComponent, rest.ListFooterComponentStyle));
+  }), renderComponent(rest.ListFooterComponent, rest.ListFooterComponentStyle), /*#__PURE__*/React.createElement("div", {
+    id: footerID
+  }));
 };
 
-var index = /*#__PURE__*/React.forwardRef(FlatList);
+var index = /*#__PURE__*/forwardRef(FlatList);
 
 export default index;

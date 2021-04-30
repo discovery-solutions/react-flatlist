@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import ReactDOM from "react-dom";
+import React, { useState, useRef, useEffect, forwardRef } from "react";
 
-const renderComponent = (Component, style) => {
+const footerID = `flatlist-footer-${ Date.now() }`;
+
+const renderComponent = (Component, style = null, returnComponent) => {
 	if (["object", "function"].includes(typeof Component) === false)
 		return null;
 
@@ -10,6 +11,9 @@ const renderComponent = (Component, style) => {
 
 		return Clone;
 	}
+
+	if (returnComponent)
+		return Component;
 
 	return <Component style={ style } />
 };
@@ -24,7 +28,7 @@ const FlatList = ({
 	const [ limit, setLimit ] = useState(initialNumToRender);
 	const container = useRef({});
 	const slicedData = data.slice(0, limit);
-	const Component = (typeof rest.Component === "function") ? Component : props => <div { ...props }/>
+	let Container = rest.Component ? forwardRef(rest.Component) : (props => <div { ...props }/>);
 
 	const scrollTo = index => {
 		try {
@@ -34,7 +38,7 @@ const FlatList = ({
       	}
 	}
 
-	const scrollToIndex = useCallback(index => {
+	const scrollToIndex = React.useCallback(index => {
 		if (index > limit)
 			setLimit(index + initialNumToRender);
 
@@ -53,7 +57,7 @@ const FlatList = ({
 
 	const getParentNode = () => {
 		try {
-			return ReactDOM.findDOMNode(container.current).parentNode;
+			return document.getElementById(footerID).parentNode.parentNode;
 		} catch (e) {
 			return undefined;
 		}
@@ -72,23 +76,27 @@ const FlatList = ({
 	useEffect(() => {
 		const parent = getParentNode();
 
-		parent.addEventListener("scroll", onScroll);
+		if (parent) {
+			parent.addEventListener("scroll", onScroll);
 
-		return () => parent.removeEventListener("scroll", onScroll);
-	}, [ onScroll ]);
+			return () => parent.removeEventListener("scroll", onScroll);
+		}
+	}, [ onScroll, container ]);
 
 	if (Array.isArray(data) === false)
 		return null;
 
 	return (
-		<Component ref={ container }>
+		<Container ref={ container } { ...rest }>
 			{renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle)}
 
 			{ slicedData.map((item, index) => renderItem({ item, index })) }
 
 			{renderComponent(rest.ListFooterComponent, rest.ListFooterComponentStyle)}
-		</Component>
+
+			<div id={ footerID }/>
+		</Container>
 	)
 }
 
-export default React.forwardRef(FlatList);
+export default forwardRef(FlatList);
