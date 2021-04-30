@@ -24,6 +24,7 @@ const FlatList = ({
 	const [ limit, setLimit ] = useState(initialNumToRender);
 	const container = useRef({});
 	const slicedData = data.slice(0, limit);
+	const Component = (typeof rest.Component === "function") ? Component : props => <div { ...props }/>
 
 	const scrollTo = index => {
 		try {
@@ -80,13 +81,13 @@ const FlatList = ({
 		return null;
 
 	return (
-		<div ref={ container }>
+		<Component ref={ container }>
 			{renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle)}
 
 			{ slicedData.map((item, index) => renderItem({ item, index })) }
 
 			{renderComponent(rest.ListFooterComponent, rest.ListFooterComponentStyle)}
-		</div>
+		</Component>
 	)
 }
 

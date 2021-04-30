@@ -40,6 +40,9 @@ var FlatList = function FlatList(_ref, ref) {
 
   var container = useRef({});
   var slicedData = data.slice(0, limit);
+  var Component = typeof rest.Component === "function" ? Component : function (props) {
+    return /*#__PURE__*/React.createElement("div", props);
+  };
 
   var scrollTo = function scrollTo(index) {
     try {
@@ -96,7 +99,7 @@ var FlatList = function FlatList(_ref, ref) {
     };
   }, [onScroll]);
   if (Array.isArray(data) === false) return null;
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(Component, {
     ref: container
   }, renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle), slicedData.map(function (item, index) {
     return renderItem({
