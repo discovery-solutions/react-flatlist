@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@babel/runtime/helpers/slicedToArray'), require('@babel/runtime/helpers/objectWithoutProperties'), require('@babel/runtime/helpers/typeof'), require('react'), require('react-dom')) :
 	typeof define === 'function' && define.amd ? define(['@babel/runtime/helpers/slicedToArray', '@babel/runtime/helpers/objectWithoutProperties', '@babel/runtime/helpers/typeof', 'react', 'react-dom'], factory) :
-	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, global['@octaldev/react-js-modal'] = factory(global._slicedToArray, global._objectWithoutProperties, global._typeof, global.React, global.ReactDOM));
+	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, global['@octaldev/react-flatlist'] = factory(global._slicedToArray, global._objectWithoutProperties, global._typeof, global.React, global.ReactDOM));
 }(this, (function (_slicedToArray, _objectWithoutProperties, _typeof, React, ReactDOM) { 'use strict';
 
 	function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }

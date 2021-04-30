@@ -1,4 +1,5 @@
-import babel from '@rollup/plugin-babel';
+import babel from "@rollup/plugin-babel";
+import myPackage from "./package.json";
 
 // the entry point for the library
 const input = "src/index.js"
@@ -9,7 +10,7 @@ MODE.map(fomart => {
     config.push({
         input: input,
         output: {
-            name: "@octaldev/react-js-modal",
+            name: myPackage.name,
             file: `dist/index.${fomart}.js`,
             format: fomart,
             exports: "auto"
@@ -17,9 +18,9 @@ MODE.map(fomart => {
         external: ["react", /@babel\/runtime/],
         plugins: [
             babel({
-                exclude: 'node_modules/**',
-                plugins: ['@babel/transform-runtime'],
-                babelHelpers: 'runtime'
+                exclude: "node_modules/**",
+                plugins: ["@babel/transform-runtime"],
+                babelHelpers: "runtime"
             })
         ]
     })
