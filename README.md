@@ -33,14 +33,15 @@ export default App;
 
 ## APIs suportadas
 
-| name          | type          | default  |
-| ------------- | ------------- | ----- |
-| data          | ```array```         | ```[]``` |
-| renderItem    | ```function```      | ```() => null``` |
-| onEndReached  | ```function```      | ```() => null``` |
-| initialNumToRender  | ```number```  | ```30``` |
-| ListHeaderComponent  | ```component / node / function```  | ```null``` |
-| ListHeaderComponentStyle  | ```style object```  | ```null``` |
-| ListFooterComponent  | ```component / node / function```  | ```null``` |
-| ListFooterComponentStyle  | ```style object```  | ```null``` |
-| Component  | ```component / function```  | ```div``` |
+| name                      | type                           |    default       | description |
+| ------------------------- | ------------------------------ | ---------------- | |
+| data                      | ```array```                    | ```[]```         | |
+| renderItem                | ```function```                 | ```() => null``` | |
+| onTopReached              | ```function```                 | ```() => null``` | when flatlist is scrolled to the top |
+| onEndReached              | ```function```                 | ```() => null``` | when flatlist is scrolled to the bottom |
+| initialNumToRender        | ```number```                   | ```30```         | |
+| ListHeaderComponent       | ```component/node/function```  | ```null```       | |
+| ListHeaderComponentStyle  | ```style object```             | ```null```       | |
+| ListFooterComponent       | ```component/node/function```  | ```null```       | |
+| ListFooterComponentStyle  | ```style object```             | ```null```       | |
+| Component                 | ```component / function```     | ```div```        | this is a custom component for the flatlist container |

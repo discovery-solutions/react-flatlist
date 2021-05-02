@@ -1,6 +1,4 @@
-import React, { useState, useRef, useEffect, forwardRef } from "react";
-
-const footerID = `flatlist-footer-${ Date.now() }`;
+import React, { useState, useEffect, useRef } from "react";
 
 const renderComponent = (Component, style = null, returnComponent) => {
 	if (["object", "function"].includes(typeof Component) === false)
@@ -20,20 +18,23 @@ const renderComponent = (Component, style = null, returnComponent) => {
 
 const FlatList = ({
 	onEndReached = () => null,
+	onTopReached = () => null,
 	renderItem = () => null,
 	initialNumToRender = 30,
 	data,
 	...rest
 }, ref) => {
 	const [ limit, setLimit ] = useState(initialNumToRender);
-	const slicedData = data.slice(0, limit);
-	let Container = rest.Component ? forwardRef(rest.Component) : (props => <div { ...props }/>);
+    const [ slicedData, setSlicedData ] = useState( data.slice(0, limit) );
+	const footerID = useRef(`flatlist-footer-${ Date.now() }`).current;
+    let listeners = useRef(global.octal_dev_flatlist_on_scroll_listeners).current;
+	let Container = rest.Component || (props => <div { ...props }/>);
 
 	const getContainer = () => {
 		try {
 			return document.getElementById(footerID).parentNode;
 		} catch (e) {
-			console.log(e);
+			// console.log(e);
 			return {};
 		}
 	}
@@ -42,9 +43,9 @@ const FlatList = ({
 
 	const scrollTo = index => {
 		try {
-      		getContainer().childNodes[index].scrollIntoView({ behavior: "smooth", block: "start" });
+      		getContainer().childNodes[index].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
       	} catch (e) {
-      		console.log(e);
+      		// console.log(e);
       	}
 	}
 
@@ -55,48 +56,96 @@ const FlatList = ({
 		return scrollTo(index)
 	}, [ scrollTo, limit, setLimit ]);
 
-	React.useImperativeHandle(ref, () => ({
-		scrollToIndex,
-		scrollToEnd: forceEnd => {
-			if (forceEnd)
-				return scrollToIndex(data.length - 1);
+	const onScroll = (useCallbacks = true) => {
+        if (!getParentNode())
+            return null;
 
-			return scrollToIndex(limit - 1);
-		},
-  	}) );
-
-	const onScroll = () => {
 		const { scrollTop, scrollHeight, offsetHeight } = getParentNode();
 		const contentHeight = scrollHeight - offsetHeight;
 
+		if (scrollTop === 0 && useCallbacks)
+			onTopReached();
+
 		if (contentHeight <= scrollTop) {
-			onEndReached();
-			setLimit(limit + initialNumToRender);
+            if (useCallbacks)
+		         onEndReached();
+
+            if (limit < data.length)
+		         setLimit(limit + initialNumToRender);
 		}
 	}
 
+    const keyExtractor = (item, index) => {
+        if (rest?.keyExtractor && typeof rest.keyExtractor === "function")
+            return rest.keyExtractor(item, index);
+
+        return index;
+    }
+
+    const handleScrolls = useCallbacks => {
+        try {
+            listeners[footerID](useCallbacks);
+        } catch (e) {
+            // console.log(e);
+        }
+    }
+
 	useEffect(() => {
-		onScroll();
-	}, []);
+		if (getParentNode() && (limit !== initialNumToRender || slicedData.length === 0))
+			setSlicedData( data.slice(0, limit) );
+	}, [ limit, data ]);
+
+    React.useImperativeHandle(ref, () => ({
+        scrollToIndex,
+        scrollToEnd: forceEnd => {
+            if (forceEnd)
+                return scrollToIndex(data.length - 1);
+
+            return scrollToIndex(limit - 1);
+        },
+    }) );
+
+	useEffect(() => {
+		handleScrolls(false);
+	}, [handleScrolls]);
+
+    useEffect(() => {
+        let updatedListeners = global.octal_dev_flatlist_on_scroll_listeners;
+
+        if (typeof updatedListeners !== "object") {
+            updatedListeners = {
+                [footerID]: onScroll
+            };
+        } else {
+            updatedListeners[footerID] = onScroll;
+        }
+
+        listeners = updatedListeners;
+    }, [ onScroll ]);
 
 	useEffect(() => {
 		const parent = getParentNode();
+        const listener = () => handleScrolls(true);
 
 		if (parent) {
-			parent.addEventListener("scroll", onScroll);
+			parent.addEventListener("scroll", listener);
 
-			return () => parent.removeEventListener("scroll", onScroll);
+			return () => parent.removeEventListener("scroll", listener);
 		}
-	}, [ onScroll, getContainer ]);
+	}, [ onScroll, getContainer, handleScrolls ]);
 
-	if (Array.isArray(data) === false)
+	if (Array.isArray(data) === false || data.length === 0)
 		return null;
+
+    const Item = ({ data }) => renderItem(data)
 
 	return (
 		<Container { ...rest }>
 			{renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle)}
 
-			{ slicedData.map((item, index) => renderItem({ item, index })) }
+			{ slicedData.map((item, index) =>
+                <Item keyExtractor={ keyExtractor(item, index) } data={{ item, index }}/>
+            )}
 
 			{renderComponent(rest.ListFooterComponent, rest.ListFooterComponentStyle)}
 
@@ -105,4 +154,4 @@ const FlatList = ({
 	)
 }
 
-export default forwardRef(FlatList);
+export default React.forwardRef(FlatList);
