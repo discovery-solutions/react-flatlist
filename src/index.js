@@ -144,7 +144,7 @@ const FlatList = ({
 			{renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle)}
 
 			{ slicedData.map((item, index) =>
-                <Item keyExtractor={ keyExtractor(item, index) } data={{ item, index }}/>
+                <Item key={ keyExtractor(item, index) } data={{ item, index }}/>
             )}
 
 			{renderComponent(rest.ListFooterComponent, rest.ListFooterComponentStyle)}

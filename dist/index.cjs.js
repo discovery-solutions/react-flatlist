@@ -175,7 +175,7 @@ var FlatList = function FlatList(_ref, ref) {
 
   return /*#__PURE__*/React__default['default'].createElement(Container, rest, renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle), slicedData.map(function (item, index) {
     return /*#__PURE__*/React__default['default'].createElement(Item, {
-      keyExtractor: keyExtractor(item, index),
+      key: keyExtractor(item, index),
       data: {
         item: item,
         index: index

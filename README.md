@@ -1,6 +1,6 @@
 # 8D - React FlatList
 
-A Super Light ReactJS Modal
+A FlatList ReactJS Component For Large Lists
 
 ```sh
 npm i @octaldev/react-flatlist
