@@ -3,6 +3,7 @@ import _slicedToArray from '@babel/runtime/helpers/slicedToArray';
 import _objectWithoutProperties from '@babel/runtime/helpers/objectWithoutProperties';
 import _typeof from '@babel/runtime/helpers/typeof';
 import React, { useState, useRef, useEffect } from 'react';
+import Utils from '@octaldev/utils';
 
 var renderComponent = function renderComponent(Component) {
   var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -118,6 +119,9 @@ var FlatList = function FlatList(_ref, ref) {
     }
   };
 
+  useEffect(function () {
+    if (Utils.compareObjects(data, slicedData) === false) setSlicedData(data.slice(0, limit));
+  }, [data, slicedData, setSlicedData, limit]);
   useEffect(function () {
     if (getParentNode() && (limit !== initialNumToRender || slicedData.length === 0)) setSlicedData(data.slice(0, limit));
   }, [limit, data]);

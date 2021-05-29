@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Utils from "@octaldev/utils";
 
 const renderComponent = (Component, style = null, returnComponent) => {
 	if (["object", "function"].includes(typeof Component) === false)
@@ -92,6 +93,11 @@ const FlatList = ({
             // console.log(e);
         }
     }
+
+	useEffect(() => {
+		if (Utils.compareObjects(data, slicedData) === false)
+			setSlicedData( data.slice(0, limit) );
+	}, [ data, slicedData, setSlicedData, limit ]);
 
 	useEffect(() => {
 		if (getParentNode() && (limit !== initialNumToRender || slicedData.length === 0))

@@ -5,6 +5,7 @@ var _slicedToArray = require('@babel/runtime/helpers/slicedToArray');
 var _objectWithoutProperties = require('@babel/runtime/helpers/objectWithoutProperties');
 var _typeof = require('@babel/runtime/helpers/typeof');
 var React = require('react');
+var Utils = require('@octaldev/utils');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -13,6 +14,7 @@ var _slicedToArray__default = /*#__PURE__*/_interopDefaultLegacy(_slicedToArray)
 var _objectWithoutProperties__default = /*#__PURE__*/_interopDefaultLegacy(_objectWithoutProperties);
 var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var Utils__default = /*#__PURE__*/_interopDefaultLegacy(Utils);
 
 var renderComponent = function renderComponent(Component) {
   var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -128,6 +130,9 @@ var FlatList = function FlatList(_ref, ref) {
     }
   };
 
+  React.useEffect(function () {
+    if (Utils__default['default'].compareObjects(data, slicedData) === false) setSlicedData(data.slice(0, limit));
+  }, [data, slicedData, setSlicedData, limit]);
   React.useEffect(function () {
     if (getParentNode() && (limit !== initialNumToRender || slicedData.length === 0)) setSlicedData(data.slice(0, limit));
   }, [limit, data]);

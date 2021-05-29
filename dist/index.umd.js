@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@babel/runtime/helpers/defineProperty'), require('@babel/runtime/helpers/slicedToArray'), require('@babel/runtime/helpers/objectWithoutProperties'), require('@babel/runtime/helpers/typeof'), require('react')) :
-	typeof define === 'function' && define.amd ? define(['@babel/runtime/helpers/defineProperty', '@babel/runtime/helpers/slicedToArray', '@babel/runtime/helpers/objectWithoutProperties', '@babel/runtime/helpers/typeof', 'react'], factory) :
-	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, global['@octaldev/react-flatlist'] = factory(global._defineProperty, global._slicedToArray, global._objectWithoutProperties, global._typeof, global.React));
-}(this, (function (_defineProperty, _slicedToArray, _objectWithoutProperties, _typeof, React) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@babel/runtime/helpers/defineProperty'), require('@babel/runtime/helpers/slicedToArray'), require('@babel/runtime/helpers/objectWithoutProperties'), require('@babel/runtime/helpers/typeof'), require('react'), require('@octaldev/utils')) :
+	typeof define === 'function' && define.amd ? define(['@babel/runtime/helpers/defineProperty', '@babel/runtime/helpers/slicedToArray', '@babel/runtime/helpers/objectWithoutProperties', '@babel/runtime/helpers/typeof', 'react', '@octaldev/utils'], factory) :
+	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, global['@octaldev/react-flatlist'] = factory(global._defineProperty, global._slicedToArray, global._objectWithoutProperties, global._typeof, global.React, global.Utils));
+}(this, (function (_defineProperty, _slicedToArray, _objectWithoutProperties, _typeof, React, Utils) { 'use strict';
 
 	function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -11,6 +11,7 @@
 	var _objectWithoutProperties__default = /*#__PURE__*/_interopDefaultLegacy(_objectWithoutProperties);
 	var _typeof__default = /*#__PURE__*/_interopDefaultLegacy(_typeof);
 	var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+	var Utils__default = /*#__PURE__*/_interopDefaultLegacy(Utils);
 
 	var renderComponent = function renderComponent(Component) {
 	  var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -126,6 +127,9 @@
 	    }
 	  };
 
+	  React.useEffect(function () {
+	    if (Utils__default['default'].compareObjects(data, slicedData) === false) setSlicedData(data.slice(0, limit));
+	  }, [data, slicedData, setSlicedData, limit]);
 	  React.useEffect(function () {
 	    if (getParentNode() && (limit !== initialNumToRender || slicedData.length === 0)) setSlicedData(data.slice(0, limit));
 	  }, [limit, data]);
