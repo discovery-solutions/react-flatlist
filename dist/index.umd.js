@@ -48,6 +48,8 @@
 	      data = _ref.data,
 	      rest = _objectWithoutProperties__default['default'](_ref, ["onEndReached", "onTopReached", "renderItem", "initialNumToRender", "data"]);
 
+	  if (Array.isArray(data) !== true) data = [];
+
 	  var _useState = React.useState(initialNumToRender),
 	      _useState2 = _slicedToArray__default['default'](_useState, 2),
 	      limit = _useState2[0],
@@ -164,14 +166,13 @@
 	      };
 	    }
 	  }, [onScroll, getContainer, handleScrolls]);
-	  if (Array.isArray(data) === false || data.length === 0) return null;
 
 	  var Item = function Item(_ref2) {
 	    var data = _ref2.data;
 	    return renderItem(data);
 	  };
 
-	  return /*#__PURE__*/React__default['default'].createElement(Container, rest, renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle), slicedData.map(function (item, index) {
+	  return /*#__PURE__*/React__default['default'].createElement(Container, rest, renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle), data.length > 0 ? slicedData.map(function (item, index) {
 	    return /*#__PURE__*/React__default['default'].createElement(Item, {
 	      key: keyExtractor(item, index),
 	      data: {
@@ -179,7 +180,7 @@
 	        index: index
 	      }
 	    });
-	  }), renderComponent(rest.ListFooterComponent, rest.ListFooterComponentStyle), /*#__PURE__*/React__default['default'].createElement("div", {
+	  }) : renderComponent(rest.ListEmptyComponent), renderComponent(rest.ListFooterComponent, rest.ListFooterComponentStyle), /*#__PURE__*/React__default['default'].createElement("div", {
 	    id: footerID
 	  }));
 	};

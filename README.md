@@ -40,6 +40,7 @@ export default App;
 | onTopReached              | ```function```                 | ```() => null``` | when flatlist is scrolled to the top |
 | onEndReached              | ```function```                 | ```() => null``` | when flatlist is scrolled to the bottom |
 | initialNumToRender        | ```number```                   | ```30```         | |
+| ListEmptyComponent        | ```component/node/function```  | ```null```       | render when data is an empty array |
 | ListHeaderComponent       | ```component/node/function```  | ```null```       | |
 | ListHeaderComponentStyle  | ```style object```             | ```null```       | |
 | ListFooterComponent       | ```component/node/function```  | ```null```       | |

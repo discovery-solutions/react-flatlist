@@ -40,6 +40,8 @@ var FlatList = function FlatList(_ref, ref) {
       data = _ref.data,
       rest = _objectWithoutProperties(_ref, ["onEndReached", "onTopReached", "renderItem", "initialNumToRender", "data"]);
 
+  if (Array.isArray(data) !== true) data = [];
+
   var _useState = useState(initialNumToRender),
       _useState2 = _slicedToArray(_useState, 2),
       limit = _useState2[0],
@@ -156,14 +158,13 @@ var FlatList = function FlatList(_ref, ref) {
       };
     }
   }, [onScroll, getContainer, handleScrolls]);
-  if (Array.isArray(data) === false || data.length === 0) return null;
 
   var Item = function Item(_ref2) {
     var data = _ref2.data;
     return renderItem(data);
   };
 
-  return /*#__PURE__*/React.createElement(Container, rest, renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle), slicedData.map(function (item, index) {
+  return /*#__PURE__*/React.createElement(Container, rest, renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle), data.length > 0 ? slicedData.map(function (item, index) {
     return /*#__PURE__*/React.createElement(Item, {
       key: keyExtractor(item, index),
       data: {
@@ -171,7 +172,7 @@ var FlatList = function FlatList(_ref, ref) {
         index: index
       }
     });
-  }), renderComponent(rest.ListFooterComponent, rest.ListFooterComponentStyle), /*#__PURE__*/React.createElement("div", {
+  }) : renderComponent(rest.ListEmptyComponent), renderComponent(rest.ListFooterComponent, rest.ListFooterComponentStyle), /*#__PURE__*/React.createElement("div", {
     id: footerID
   }));
 };

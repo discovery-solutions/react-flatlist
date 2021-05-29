@@ -24,6 +24,9 @@ const FlatList = ({
 	data,
 	...rest
 }, ref) => {
+	if (Array.isArray(data) !== true)
+		data = [];
+
 	const [ limit, setLimit ] = useState(initialNumToRender);
     const [ slicedData, setSlicedData ] = useState( data.slice(0, limit) );
 	const footerID = useRef(`flatlist-footer-${ Date.now() }`).current;
@@ -134,18 +137,19 @@ const FlatList = ({
 		}
 	}, [ onScroll, getContainer, handleScrolls ]);
 
-	if (Array.isArray(data) === false || data.length === 0)
-		return null;
-
     const Item = ({ data }) => renderItem(data)
 
 	return (
 		<Container { ...rest }>
 			{renderComponent(rest.ListHeaderComponent, rest.ListHeaderComponentStyle)}
 
-			{ slicedData.map((item, index) =>
-                <Item key={ keyExtractor(item, index) } data={{ item, index }}/>
-            )}
+			{(data.length > 0) ? (
+				slicedData.map((item, index) =>
+	                <Item key={ keyExtractor(item, index) } data={{ item, index }}/>
+	            )
+			) : (
+				renderComponent(rest.ListEmptyComponent)
+			)}
 
 			{renderComponent(rest.ListFooterComponent, rest.ListFooterComponentStyle)}
 
