@@ -1,9 +1,9 @@
-# 8D - React FlatList
+# Discovery Solutions - React FlatList
 
 A FlatList ReactJS Component For Large Lists
 
 ```sh
-npm i @octaldev/react-flatlist
+npm i @discovery/react-flatlist
 ```
 
 ### Conteúdo
@@ -17,7 +17,7 @@ A primeira coisa a ser feita é instanciar o provider, assim:
 
 ```js
 import React from "react";
-import FlatList from "@octaldev/react-flatlist";
+import FlatList from "@discovery/react-flatlist";
 
 const App = () => (
     <FlatList
