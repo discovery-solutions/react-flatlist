@@ -34,7 +34,7 @@ export default App;
 ## APIs suportadas
 
 | name                      | type                           |    default       | description |
-| ------------------------- | ------------------------------ | ---------------- | . |
+| ------------------------- | ------------------------------ | ---------------- | ----------- |
 | data                      | ```array```                    | ```[]```         | . |
 | renderItem                | ```function```                 | ```() => null``` | . |
 | onTopReached              | ```function```                 | ```() => null``` | when flatlist is scrolled to the top |
