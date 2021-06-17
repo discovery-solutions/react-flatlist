@@ -1,6 +1,6 @@
 {
-    "name": "@octaldev/react-flatlist",
-    "version": "0.0.9",
+    "name": "@discovery/react-flatlist",
+    "version": "0.0.1",
     "description": "A FlatList ReactJS Component For Large Lists",
     "main": "dist/index.cjs.js",
     "author": "Lucas Craveiro Paes <lucascraveiropaes@gmail.com>",
