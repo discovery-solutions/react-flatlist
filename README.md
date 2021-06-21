@@ -3,7 +3,7 @@
 A FlatList ReactJS Component For Large Lists
 
 ```sh
-npm i @discovery/react-flatlist
+npm i @discovery-solutions/react-flatlist
 ```
 
 ### Conteúdo
@@ -17,7 +17,7 @@ A primeira coisa a ser feita é instanciar o provider, assim:
 
 ```js
 import React from "react";
-import FlatList from "@discovery/react-flatlist";
+import FlatList from "@discovery-solutions/react-flatlist";
 
 const App = () => (
     <FlatList

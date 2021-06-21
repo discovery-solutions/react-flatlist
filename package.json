@@ -1,5 +1,5 @@
 {
-    "name": "@discovery/react-flatlist",
+    "name": "@discovery-solutions/react-flatlist",
     "version": "0.0.1",
     "description": "A FlatList ReactJS Component For Large Lists",
     "main": "dist/index.cjs.js",
@@ -7,19 +7,18 @@
     "license": "MIT",
     "scripts": {
         "build": "rollup -c",
-        "publish:prod": "npm run build && npm publish"
+        "publish:prod": "npm run build && npm publish --access=public"
     },
     "repository": {
         "type": "git",
-        "url": "http://dhpp.homelinux.com:14500/8d-packages/react-flatlist"
+        "url": "http://github.com/discovery-solutions/react-flatlist"
     },
     "keywords": [
         "react",
         "react-hooks",
         "flatlist",
-        "dhpp",
-        "octal",
-        "octaldev"
+        "discovery",
+        "discovery-solutions"
     ],
     "devDependencies": {
         "@babel/cli": "^7.13.16",
@@ -34,6 +33,6 @@
     "peerDependencies": {
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
-        "@octaldev/utils": "^0.0.9"
+        "@discovery-solutions/utils": "^0.0.9"
     }
 }
