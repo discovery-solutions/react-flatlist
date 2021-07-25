@@ -65,7 +65,7 @@ var FlatList = function FlatList(_ref, ref) {
       setSlicedData = _useState4[1];
 
   var footerID = React.useRef("flatlist-footer-".concat(Date.now())).current;
-  var listeners = React.useRef(global.octal_dev_flatlist_on_scroll_listeners).current;
+  var listeners = React.useRef(global.discovery_solutions_flatlist_on_scroll_listeners).current;
 
   var Container = rest.Component || function (props) {
     return /*#__PURE__*/React__default['default'].createElement("div", props);
@@ -149,7 +149,7 @@ var FlatList = function FlatList(_ref, ref) {
     handleScrolls(false);
   }, [handleScrolls]);
   React.useEffect(function () {
-    var updatedListeners = global.octal_dev_flatlist_on_scroll_listeners;
+    var updatedListeners = global.discovery_solutions_flatlist_on_scroll_listeners;
 
     if (_typeof__default['default'](updatedListeners) !== "object") {
       updatedListeners = _defineProperty__default['default']({}, footerID, onScroll);
