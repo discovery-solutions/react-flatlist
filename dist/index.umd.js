@@ -1,6 +1,6 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@babel/runtime/helpers/defineProperty'), require('@babel/runtime/helpers/slicedToArray'), require('@babel/runtime/helpers/objectWithoutProperties'), require('@babel/runtime/helpers/typeof'), require('react'), require('@octaldev/utils')) :
-	typeof define === 'function' && define.amd ? define(['@babel/runtime/helpers/defineProperty', '@babel/runtime/helpers/slicedToArray', '@babel/runtime/helpers/objectWithoutProperties', '@babel/runtime/helpers/typeof', 'react', '@octaldev/utils'], factory) :
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@babel/runtime/helpers/defineProperty'), require('@babel/runtime/helpers/slicedToArray'), require('@babel/runtime/helpers/objectWithoutProperties'), require('@babel/runtime/helpers/typeof'), require('react'), require('@discovery-solutions/utils')) :
+	typeof define === 'function' && define.amd ? define(['@babel/runtime/helpers/defineProperty', '@babel/runtime/helpers/slicedToArray', '@babel/runtime/helpers/objectWithoutProperties', '@babel/runtime/helpers/typeof', 'react', '@discovery-solutions/utils'], factory) :
 	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, global['@discovery-solutions/react-flatlist'] = factory(global._defineProperty, global._slicedToArray, global._objectWithoutProperties, global._typeof, global.React, global.Utils));
 }(this, (function (_defineProperty, _slicedToArray, _objectWithoutProperties, _typeof, React, Utils) { 'use strict';
 

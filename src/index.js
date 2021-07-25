@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import Utils from "@octaldev/utils";
+import Utils from "@discovery-solutions/utils";
 
 const renderComponent = (Component, style = null, returnComponent) => {
 	if (["object", "function"].includes(typeof Component) === false)

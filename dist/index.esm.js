@@ -3,7 +3,7 @@ import _slicedToArray from '@babel/runtime/helpers/slicedToArray';
 import _objectWithoutProperties from '@babel/runtime/helpers/objectWithoutProperties';
 import _typeof from '@babel/runtime/helpers/typeof';
 import React, { useState, useRef, useEffect } from 'react';
-import Utils from '@octaldev/utils';
+import Utils from '@discovery-solutions/utils';
 
 var renderComponent = function renderComponent(Component) {
   var style = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;

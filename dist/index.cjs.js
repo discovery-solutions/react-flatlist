@@ -5,7 +5,7 @@ var _slicedToArray = require('@babel/runtime/helpers/slicedToArray');
 var _objectWithoutProperties = require('@babel/runtime/helpers/objectWithoutProperties');
 var _typeof = require('@babel/runtime/helpers/typeof');
 var React = require('react');
-var Utils = require('@octaldev/utils');
+var Utils = require('@discovery-solutions/utils');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
