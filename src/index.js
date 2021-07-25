@@ -31,7 +31,7 @@ const FlatList = ({
 	const [ limit, setLimit ] = useState(initialNumToRender);
     const [ slicedData, setSlicedData ] = useState( data.slice(0, limit) );
 	const footerID = useRef(`flatlist-footer-${ Date.now() }`).current;
-    let listeners = useRef(global.octal_dev_flatlist_on_scroll_listeners).current;
+    let listeners = useRef(global.discovery_solutions_flatlist_on_scroll_listeners).current;
 	let Container = rest.Component || (props => <div { ...props }/>);
 
 	const getContainer = () => {
@@ -119,7 +119,7 @@ const FlatList = ({
 	}, [handleScrolls]);
 
     useEffect(() => {
-        let updatedListeners = global.octal_dev_flatlist_on_scroll_listeners;
+        let updatedListeners = global.discovery_solutions_flatlist_on_scroll_listeners;
 
         if (typeof updatedListeners !== "object") {
             updatedListeners = {
